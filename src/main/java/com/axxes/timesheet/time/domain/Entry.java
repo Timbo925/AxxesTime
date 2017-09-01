@@ -1,7 +1,6 @@
 package com.axxes.timesheet.time.domain;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -10,8 +9,8 @@ public class Entry {
     @Id
     @GeneratedValue
     private Long id;
-    private Timestamp begin;
-    private Timestamp to;
+    private LocalDateTime begin;
+    private LocalDateTime to;
     @ManyToOne
     private Contract contract;
     @Enumerated(EnumType.STRING)
@@ -32,20 +31,21 @@ public class Entry {
                 '}';
     }
 
+
     public LocalDateTime getBegin() {
-        return begin.toLocalDateTime();
+        return begin;
     }
 
     public void setBegin(LocalDateTime begin) {
-        this.begin = Timestamp.valueOf(begin);
+        this.begin = begin;
     }
 
     public LocalDateTime getTo() {
-        return to.toLocalDateTime();
+        return to;
     }
 
     public void setTo(LocalDateTime to) {
-        this.to = Timestamp.valueOf(to);
+        this.to = to;
     }
 
     public Long getId() {
