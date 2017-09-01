@@ -1,8 +1,9 @@
-package com.axxes.timesheet.time.service;
+package com.axxes.timesheet.time.service.impl;
 
 import com.axxes.timesheet.time.domain.Project;
 import com.axxes.timesheet.time.domain.User;
 import com.axxes.timesheet.time.repository.UserRepository;
+import com.axxes.timesheet.time.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
