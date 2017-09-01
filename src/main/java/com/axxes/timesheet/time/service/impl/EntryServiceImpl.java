@@ -34,7 +34,7 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public void saveEntriesForProject(LocalDateTime from, LocalDateTime to, Long projectId) {
-        List<Entry> entries = entryRepository.findAllByBeginBetweenAndContractId(from, to, projectId);
+        List<Entry> entries = entryRepository.findByContractIdAndBeginBetween(from, to, projectId);
         for (Entry e : entries) {
             e.setStatus(Status.SAVED);
             entryRepository.save(e);

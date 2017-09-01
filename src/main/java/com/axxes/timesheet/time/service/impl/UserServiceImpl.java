@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         for (User u : users) {
             List<Entry> entriesFromUser = new ArrayList<>();
             for (Contract p : u.getContracts()) {
-                entriesFromUser.addAll(entryRepository.findAllByBeginBetweenAndContractId(begin, to.plusDays(1), p.getId()));
+                entriesFromUser.addAll(entryRepository.findByContractIdAndBeginBetween(begin, to.plusDays(1), p.getId()));
             }
             if (!periodContainsRequiredDays(entriesFromUser, begin, to.plusDays(1))) {
                 incomplete.add(u);
