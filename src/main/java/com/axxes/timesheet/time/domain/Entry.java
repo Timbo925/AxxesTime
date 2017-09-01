@@ -12,7 +12,7 @@ public class Entry {
     private LocalDateTime from;
     private LocalDateTime to;
     @ManyToOne
-    private Project project;
+    private Contract contract;
     @Enumerated(EnumType.STRING)
     private Percentage percentage;
     @Enumerated(EnumType.STRING)
@@ -25,7 +25,7 @@ public class Entry {
                 "id=" + id +
                 ", from=" + from +
                 ", to=" + to +
-                ", project=" + project +
+                ", contract=" + contract +
                 ", percentage=" + percentage +
                 ", status=" + status +
                 '}';
@@ -56,12 +56,12 @@ public class Entry {
     }
 
 
-    public Project getProject() {
-        return project;
+    public Contract getContract() {
+        return contract;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setContract(Contract contract) {
+        this.contract = contract;
     }
 
     public Percentage getPercentage() {
@@ -101,7 +101,7 @@ public class Entry {
             return false;
         }
 
-        if (project != null ? !project.equals(entry.project) : entry.project != null) {
+        if (contract != null ? !contract.equals(entry.contract) : entry.contract != null) {
             return false;
         }
         if (percentage != entry.percentage) {
@@ -115,7 +115,7 @@ public class Entry {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (from != null ? from.hashCode() : 0);
         result = 31 * result + (to != null ? to.hashCode() : 0);
-        result = 31 * result + (project != null ? project.hashCode() : 0);
+        result = 31 * result + (contract != null ? contract.hashCode() : 0);
         result = 31 * result + (percentage != null ? percentage.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;

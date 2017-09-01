@@ -1,7 +1,7 @@
 package com.axxes.timesheet.time.service.impl;
 
+import com.axxes.timesheet.time.domain.Contract;
 import com.axxes.timesheet.time.domain.Entry;
-import com.axxes.timesheet.time.domain.Project;
 import com.axxes.timesheet.time.domain.User;
 import com.axxes.timesheet.time.repository.EntryRepository;
 import com.axxes.timesheet.time.repository.UserRepository;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +25,14 @@ public class UserServiceImpl implements UserService {
     private EntryRepository entryRepository;
 
     @Override
-    public void assignProjectToUser(Long userId, Project project) {
+    public void assignProjectToUser(Long userId, Contract contract) {
         User user = userRepository.findOne(userId);
-        user.setCurrentProject(project);
+        user.getContracts().add(contract);
         userRepository.save(user);
     }
 
     @Override
-    public List<User> findUsersWithIncompletePeriod(LocalDateTime from, LocalDateTime to, Long projectId) {
-        List<Entry> entries = entryRepository.getEntriesBetweenFor(from, to, projectId);
+    public List<User> findUsersWithIncompletePeriod(LocalDateTime from, LocalDateTime to) {
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users::add);
         List<LocalDateTime> requiredDays = findRequiredDaysInPeriod(from, to);
@@ -40,10 +40,12 @@ public class UserServiceImpl implements UserService {
         List<User> incomplete = new ArrayList<>();
 
         for (User u : users) {
-            for (LocalDateTime l : requiredDays) {
-                if (!entryExistsFromProjectWithDate(u.getId(), l, entries)) {
-                    incomplete.add(u);
-                }
+            List<Entry> entriesFromUser = new ArrayList<>();
+            for (Contract p : u.getContracts()) {
+                entriesFromUser.addAll(entryRepository.findAllByFromBetweenAndContractId(from, to.plusDays(1), p.getId()));
+            }
+            if (!periodContainRequiredDays(entriesFromUser, from, to.plusDays(1))) {
+                incomplete.add(u);
             }
         }
         return incomplete;
@@ -71,7 +73,22 @@ public class UserServiceImpl implements UserService {
         return dates;
     }
 
-    private boolean entryExistsFromProjectWithDate(Long projectId, LocalDateTime date, List<Entry> entries) {
-        return entries.stream().anyMatch(e -> e.getFrom().equals(date) && e.getProject().getId().equals(projectId));
+    private boolean periodContainRequiredDays(List<Entry> entries, LocalDateTime from, LocalDateTime to) {
+        List<LocalDateTime> requiredDates = findRequiredDaysInPeriod(from, to);
+        for (LocalDateTime l : requiredDates) {
+            if (!hasRequiredDay(entries, l.toLocalDate())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean hasRequiredDay(List<Entry> entries, LocalDate date) {
+        for (Entry e : entries) {
+            if (e.getFrom().toLocalDate().equals(date)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

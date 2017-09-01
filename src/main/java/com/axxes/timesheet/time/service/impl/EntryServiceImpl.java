@@ -1,8 +1,8 @@
 package com.axxes.timesheet.time.service.impl;
 
+import com.axxes.timesheet.time.domain.Contract;
 import com.axxes.timesheet.time.domain.Entry;
 import com.axxes.timesheet.time.domain.Percentage;
-import com.axxes.timesheet.time.domain.Project;
 import com.axxes.timesheet.time.domain.Status;
 import com.axxes.timesheet.time.exception.EntryException;
 import com.axxes.timesheet.time.repository.EntryRepository;
@@ -27,12 +27,12 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public Entry createEntryForProject(LocalDateTime from, LocalDateTime to, Long projectId, Percentage percentage) {
-        Project project = projectRepository.findOne(projectId);
+        Contract contract = projectRepository.findOne(projectId);
         Entry entry = new Entry();
         entry.setFrom(from);
         entry.setTo(to);
 
-        entry.setProject(project);
+        entry.setContract(contract);
         entry.setPercentage(percentage);
 
         entry.setStatus(Status.OPEN);
@@ -43,7 +43,7 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public void saveEntriesForProject(LocalDateTime from, LocalDateTime to, Long projectId) {
-        List<Entry> entries = entryRepository.findAllByDayBetweenAndProjectId(from, to, projectId);
+        List<Entry> entries = entryRepository.findAllByFromBetweenAndContractId(from, to, projectId);
         for (Entry e : entries) {
             e.setStatus(Status.SAVED);
             entryRepository.save(e);
@@ -53,7 +53,7 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public void editPeriodAsAdmin(LocalDateTime from, LocalDateTime to, Long userId) {
-        List<Entry> entries = entryRepository.findAllByDayBetweenAndProjectId(from, to, userId);
+        List<Entry> entries = entryRepository.findAllByFromBetweenAndContractId(from, to, userId);
         for (Entry e : entries) {
             e.setStatus(Status.SAVED);
             entryRepository.save(e);
