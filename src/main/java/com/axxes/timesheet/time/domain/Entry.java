@@ -1,6 +1,7 @@
 package com.axxes.timesheet.time.domain;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -9,8 +10,8 @@ public class Entry {
     @Id
     @GeneratedValue
     private Long id;
-    private LocalDateTime from;
-    private LocalDateTime to;
+    private Timestamp begin;
+    private Timestamp to;
     @ManyToOne
     private Contract contract;
     @Enumerated(EnumType.STRING)
@@ -23,7 +24,7 @@ public class Entry {
     public String toString() {
         return "Entry{" +
                 "id=" + id +
-                ", from=" + from +
+                ", begin=" + begin +
                 ", to=" + to +
                 ", contract=" + contract +
                 ", percentage=" + percentage +
@@ -31,20 +32,20 @@ public class Entry {
                 '}';
     }
 
-    public LocalDateTime getFrom() {
-        return from;
+    public LocalDateTime getBegin() {
+        return begin.toLocalDateTime();
     }
 
-    public void setFrom(LocalDateTime from) {
-        this.from = from;
+    public void setBegin(LocalDateTime begin) {
+        this.begin = Timestamp.valueOf(begin);
     }
 
     public LocalDateTime getTo() {
-        return to;
+        return to.toLocalDateTime();
     }
 
     public void setTo(LocalDateTime to) {
-        this.to = to;
+        this.to = Timestamp.valueOf(to);
     }
 
     public Long getId() {
@@ -94,7 +95,7 @@ public class Entry {
         if (id != null ? !id.equals(entry.id) : entry.id != null) {
             return false;
         }
-        if (from != null ? !from.equals(entry.from) : entry.from != null) {
+        if (begin != null ? !begin.equals(entry.begin) : entry.begin != null) {
             return false;
         }
         if (to != null ? !to.equals(entry.to) : entry.to != null) {
@@ -113,7 +114,7 @@ public class Entry {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (from != null ? from.hashCode() : 0);
+        result = 31 * result + (begin != null ? begin.hashCode() : 0);
         result = 31 * result + (to != null ? to.hashCode() : 0);
         result = 31 * result + (contract != null ? contract.hashCode() : 0);
         result = 31 * result + (percentage != null ? percentage.hashCode() : 0);

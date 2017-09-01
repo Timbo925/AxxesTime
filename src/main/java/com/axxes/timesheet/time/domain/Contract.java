@@ -2,6 +2,7 @@ package com.axxes.timesheet.time.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Contract {
@@ -16,6 +17,8 @@ public class Contract {
     private double amountOfHours;
     private LocalDateTime defaultStart;
     private LocalDateTime defaultEnd;
+    @OneToMany
+    private List<Entry> entries;
 
     @Override
     public String toString() {
@@ -114,5 +117,13 @@ public class Contract {
 
     public void setAmountOfHours(double amountOfHours) {
         this.amountOfHours = amountOfHours;
+    }
+
+    public List<Entry> getEntries() {
+        return entries;
+    }
+
+    public void setEntries(List<Entry> entries) {
+        this.entries = entries;
     }
 }

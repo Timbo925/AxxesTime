@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface EntryRepository extends CrudRepository<Entry, Long> {
 
-    List<Entry> findAllByFromBetweenAndContractId(LocalDateTime after, LocalDateTime before, Long projectId);
+    List<Entry> findAllByBeginBetweenAndContractId(LocalDateTime before, LocalDateTime after, Long contractId);
 }

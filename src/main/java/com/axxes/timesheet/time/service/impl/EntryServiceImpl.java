@@ -2,7 +2,6 @@ package com.axxes.timesheet.time.service.impl;
 
 import com.axxes.timesheet.time.domain.Contract;
 import com.axxes.timesheet.time.domain.Entry;
-import com.axxes.timesheet.time.domain.Percentage;
 import com.axxes.timesheet.time.domain.Status;
 import com.axxes.timesheet.time.repository.ContractRepository;
 import com.axxes.timesheet.time.repository.EntryRepository;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EntryServiceImpl implements EntryService {
@@ -24,24 +24,17 @@ public class EntryServiceImpl implements EntryService {
 
 
     @Override
-    public Entry createEntryForProject(LocalDateTime from, LocalDateTime to, Long projectId, Percentage percentage) {
+    public Entry create(Entry entry, Long projectId) {
         Contract contract = contractRepository.findOne(projectId);
-        Entry entry = new Entry();
-        entry.setFrom(from);
-        entry.setTo(to);
-
-        entry.setContract(contract);
-        entry.setPercentage(percentage);
-
-        entry.setStatus(Status.OPEN);
-
-        return entryRepository.save(entry);
+        Entry savedEntry = entryRepository.save(entry);
+        contract.getEntries().add(savedEntry);
+        contractRepository.save(contract);
+        return savedEntry;
     }
-
 
     @Override
     public void saveEntriesForProject(LocalDateTime from, LocalDateTime to, Long projectId) {
-        List<Entry> entries = entryRepository.findAllByFromBetweenAndContractId(from, to, projectId);
+        List<Entry> entries = entryRepository.findAllByBeginBetweenAndContractId(from, to, projectId);
         for (Entry e : entries) {
             e.setStatus(Status.SAVED);
             entryRepository.save(e);
@@ -60,8 +53,11 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
-    public List<Entry> getEntriesBetweenFor(LocalDateTime startDate, LocalDateTime endDate, Long projectId) {
-        return null;
+    public List<Entry> getEntriesBetweenFor(LocalDateTime startDate, LocalDateTime endDate, Long contractId) {
+        Contract contract = contractRepository.findOne(contractId);
+        List<Entry> entries = contract.getEntries();
+        return entries.stream().filter(entry -> !entry.getBegin().isBefore(startDate) && (!entry.getTo().isAfter(endDate))).collect(Collectors.toList());
+
     }
 
     @Override

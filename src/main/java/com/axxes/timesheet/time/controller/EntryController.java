@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@RestController(value = "/entry")
+@RestController
+@RequestMapping("/entry")
 public class EntryController {
 
     @Autowired
@@ -22,20 +23,23 @@ public class EntryController {
         return entryService.getEntriesBetweenFor(startDate, endDate, projectId);
     }
 
-    @GetMapping
-    public Entry getEntry(Long entryId) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Entry getEntry(@PathVariable("id") Long entryId) {
         return entryService.getEntry(entryId);
     }
 
-    @DeleteMapping
-    public void deleteEntry(Long entryId) {
+    @DeleteMapping("/{id}")
+    public void deleteEntry(@PathVariable("id") Long entryId) {
         entryService.delete(entryId);
     }
 
-    @PutMapping
-    public Entry update(Entry entry){
-        return  entryService.update(entry);
+    @PutMapping()
+    public Entry update(@RequestBody Entry entry) {
+        return entryService.update(entry);
     }
 
-
+    @PostMapping("/{id}")
+    public Entry create(@RequestBody Entry entry, @PathVariable("id") Long projectId) {
+        return entryService.create(entry, projectId);
+    }
 }

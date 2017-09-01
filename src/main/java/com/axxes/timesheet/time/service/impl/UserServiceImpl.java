@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findUsersWithIncompletePeriod(LocalDateTime from, LocalDateTime to) {
+    public List<User> findUsersWithIncompletePeriod(LocalDateTime begin, LocalDateTime to) {
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users::add);
 
@@ -41,9 +41,9 @@ public class UserServiceImpl implements UserService {
         for (User u : users) {
             List<Entry> entriesFromUser = new ArrayList<>();
             for (Contract p : u.getContracts()) {
-                entriesFromUser.addAll(entryRepository.findAllByFromBetweenAndContractId(from, to.plusDays(1), p.getId()));
+                entriesFromUser.addAll(entryRepository.findAllByBeginBetweenAndContractId(begin, to.plusDays(1), p.getId()));
             }
-            if (!periodContainsRequiredDays(entriesFromUser, from, to.plusDays(1))) {
+            if (!periodContainsRequiredDays(entriesFromUser, begin, to.plusDays(1))) {
                 incomplete.add(u);
             }
         }
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
 
     private boolean hasRequiredDay(List<Entry> entries, LocalDate date) {
         for (Entry e : entries) {
-            if (e.getFrom().toLocalDate().equals(date)) {
+            if (e.getBegin().toLocalDate().equals(date)) {
                 return true;
             }
         }
