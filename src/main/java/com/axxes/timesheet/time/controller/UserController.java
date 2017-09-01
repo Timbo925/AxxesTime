@@ -44,8 +44,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PATCH)
-    public void updateUser() {
-
+    public void updateUser(@RequestBody User user) {
+        userService.update(user);
     }
 
 }

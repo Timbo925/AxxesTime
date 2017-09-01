@@ -40,5 +40,10 @@ public class UserFacadeImpl implements UserFacade {
         userService.addUser(user);
     }
 
+    @Override
+    public void updateUser(User user) {
+        userService.update(user);
+    }
+
 
 }

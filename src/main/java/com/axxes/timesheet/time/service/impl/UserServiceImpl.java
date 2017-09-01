@@ -83,6 +83,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
+    @Override
+    public void update(User user) {
+        userRepository.save(user);
+    }
+
     private List<LocalDateTime> findRequiredDaysInPeriod(LocalDateTime from, LocalDateTime to) {
         List<LocalDateTime> dates = new ArrayList<>();
         for (LocalDateTime date = from; date.isBefore(to); date = date.plusDays(1)) {
