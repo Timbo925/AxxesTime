@@ -1,9 +1,6 @@
 package com.axxes.timesheet.time.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
@@ -17,6 +14,8 @@ public class User {
     private UserType userType;
     private Double vacation;
     private Double recup;
+    @ManyToOne
+    private Project currentProject;
 
     public Long getId() {
         return id;
@@ -66,6 +65,14 @@ public class User {
         this.userType = userType;
     }
 
+    public Project getCurrentProject() {
+        return currentProject;
+    }
+
+    public void setCurrentProject(Project currentProject) {
+        this.currentProject = currentProject;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -75,6 +82,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", userType=" + userType +
+                ", currentProject=" + currentProject +
                 '}';
     }
 

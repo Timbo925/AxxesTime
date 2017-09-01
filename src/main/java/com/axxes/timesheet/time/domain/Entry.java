@@ -1,10 +1,6 @@
 package com.axxes.timesheet.time.domain;
 
-
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -15,13 +11,21 @@ public class Entry {
     private Long id;
     private LocalTime from;
     private LocalTime to;
-    private LocalDateTime dag;
+    private LocalDateTime day;
+    @ManyToOne
     private Project project;
     @Enumerated(EnumType.STRING)
     private Percentage percentage;
+    @ManyToOne
     private User user;
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    public Entry(LocalTime from, LocalTime to, LocalDateTime day){
+        this.from = from;
+        this.to = to;
+        this.day = day;
+    }
 
     @Override
     public String toString() {
@@ -29,7 +33,7 @@ public class Entry {
                 "id=" + id +
                 ", from=" + from +
                 ", to=" + to +
-                ", dag=" + dag +
+                ", day=" + day +
                 ", project=" + project +
                 ", percentage=" + percentage +
                 ", user=" + user +
@@ -61,12 +65,12 @@ public class Entry {
         this.to = to;
     }
 
-    public LocalDateTime getDag() {
-        return dag;
+    public LocalDateTime getDay() {
+        return day;
     }
 
-    public void setDag(LocalDateTime dag) {
-        this.dag = dag;
+    public void setDay(LocalDateTime day) {
+        this.day = day;
     }
 
     public Project getProject() {
@@ -121,7 +125,7 @@ public class Entry {
         if (to != null ? !to.equals(entry.to) : entry.to != null) {
             return false;
         }
-        if (dag != null ? !dag.equals(entry.dag) : entry.dag != null) {
+        if (day != null ? !day.equals(entry.day) : entry.day != null) {
             return false;
         }
         if (project != null ? !project.equals(entry.project) : entry.project != null) {
@@ -141,7 +145,7 @@ public class Entry {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (from != null ? from.hashCode() : 0);
         result = 31 * result + (to != null ? to.hashCode() : 0);
-        result = 31 * result + (dag != null ? dag.hashCode() : 0);
+        result = 31 * result + (day != null ? day.hashCode() : 0);
         result = 31 * result + (project != null ? project.hashCode() : 0);
         result = 31 * result + (percentage != null ? percentage.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
