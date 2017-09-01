@@ -6,7 +6,8 @@ import java.util.List;
 @Entity
 public class User {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
     private String firstName;
     private String lastName;
@@ -18,8 +19,6 @@ public class User {
     private Double recup;
     @OneToMany
     private List<Contract> contracts;
-    @ManyToOne
-    private Project currentProject;
     private String password;
 
     public Long getId() {

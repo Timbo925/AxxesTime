@@ -1,7 +1,7 @@
 package com.axxes.timesheet.time.service.impl;
 
+import com.axxes.timesheet.time.domain.Contract;
 import com.axxes.timesheet.time.domain.Entry;
-import com.axxes.timesheet.time.domain.Project;
 import com.axxes.timesheet.time.domain.User;
 import com.axxes.timesheet.time.repository.EntryRepository;
 import com.axxes.timesheet.time.repository.UserRepository;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findUsersWithIncompletePeriod(LocalDate from, LocalDate to) {
+    public List<User> findUsersWithIncompletePeriod(LocalDateTime from, LocalDateTime to) {
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users::add);
 
@@ -40,9 +41,9 @@ public class UserServiceImpl implements UserService {
         for (User u : users) {
             List<Entry> entriesFromUser = new ArrayList<>();
             for (Contract p : u.getContracts()) {
-                entriesFromUser.addAll(entryRepository.findAllByFromBetweenAndContractId(from.atStartOfDay(), to.plusDays(1).atStartOfDay(), p.getId()));
+                entriesFromUser.addAll(entryRepository.findAllByFromBetweenAndContractId(from, to.plusDays(1), p.getId()));
             }
-            if (!periodContainRequiredDays(entriesFromUser, from.atStartOfDay(), to.plusDays(1).atStartOfDay())) {
+            if (!periodContainRequiredDays(entriesFromUser, from, to.plusDays(1))) {
                 incomplete.add(u);
             }
         }
