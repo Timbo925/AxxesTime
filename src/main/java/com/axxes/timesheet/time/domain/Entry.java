@@ -16,16 +16,9 @@ public class Entry {
     private Project project;
     @Enumerated(EnumType.STRING)
     private Percentage percentage;
-    @ManyToOne
-    private User user;
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public Entry(LocalTime from, LocalTime to, LocalDateTime day){
-        this.from = from;
-        this.to = to;
-        this.day = day;
-    }
 
     @Override
     public String toString() {
@@ -36,7 +29,6 @@ public class Entry {
                 ", day=" + day +
                 ", project=" + project +
                 ", percentage=" + percentage +
-                ", user=" + user +
                 ", status=" + status +
                 '}';
     }
@@ -89,14 +81,6 @@ public class Entry {
         this.percentage = percentage;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Status getStatus() {
         return status;
     }
@@ -134,9 +118,6 @@ public class Entry {
         if (percentage != entry.percentage) {
             return false;
         }
-        if (user != null ? !user.equals(entry.user) : entry.user != null) {
-            return false;
-        }
         return status == entry.status;
     }
 
@@ -148,7 +129,6 @@ public class Entry {
         result = 31 * result + (day != null ? day.hashCode() : 0);
         result = 31 * result + (project != null ? project.hashCode() : 0);
         result = 31 * result + (percentage != null ? percentage.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }

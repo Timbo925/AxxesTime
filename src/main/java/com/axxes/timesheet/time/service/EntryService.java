@@ -1,13 +1,19 @@
 package com.axxes.timesheet.time.service;
 
+import com.axxes.timesheet.time.domain.Entry;
 import com.axxes.timesheet.time.domain.Percentage;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.List;
 
 public interface EntryService {
 
-    void createEntryForUser(LocalTime from, LocalTime to, LocalDateTime day, Long userId, Percentage percentage);
-    void savePeriodAsUser(LocalDateTime from, LocalDateTime to, Long userId);
+    Entry createEntryForProject(LocalDateTime from, LocalDateTime to, Long projectId, Percentage percentage);
 
+    void saveEntriesForProject(LocalDateTime from, LocalDateTime to, Long projectId);
+
+    List<Entry> getEntriesBetweenFor(LocalDateTime startDate, LocalDateTime endDate, Long projectId);
+
+
+    boolean lockEntries(LocalDateTime from, LocalDateTime to, Long projectId);
 }

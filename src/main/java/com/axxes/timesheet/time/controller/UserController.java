@@ -28,7 +28,22 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public void user() {
+    public void getUser() {
+
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    public void createUser() {
+
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.DELETE)
+    public void deleteUser() {
+
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.PATCH)
+    public void updateUser() {
 
     }
 
