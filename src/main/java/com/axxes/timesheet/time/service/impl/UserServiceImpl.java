@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User get(String email) {
-        return userRepository.findByEmailAnd(email);
+        return userRepository.findByEmail(email);
     }
 
     private List<LocalDateTime> findRequiredDaysInPeriod(LocalDateTime from, LocalDateTime to) {

@@ -39,4 +39,6 @@ public class UserFacadeImpl implements UserFacade {
         user.setUserType(UserType.valueOf(userInput.getUserType()));
         userService.addUser(user);
     }
+
+
 }
