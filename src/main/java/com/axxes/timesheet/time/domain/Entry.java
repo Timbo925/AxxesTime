@@ -7,7 +7,7 @@ import java.time.LocalTime;
 @Entity
 public class Entry {
 
-    @Id
+    @Id @GeneratedValue
     private Long id;
     private LocalTime from;
     private LocalTime to;

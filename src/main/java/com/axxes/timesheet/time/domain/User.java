@@ -4,7 +4,8 @@ import javax.persistence.*;
 
 @Entity
 public class User {
-    @Id
+
+    @Id @GeneratedValue
     private Long id;
     private String firstName;
     private String lastName;
