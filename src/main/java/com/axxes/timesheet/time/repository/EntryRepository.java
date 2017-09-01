@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface EntryRepository extends CrudRepository<Entry, Long> {
 
-    List<Entry> findAllByDayBetweenAndUserIdAndProjectId(LocalDateTime after,LocalDateTime before, Long userId, Long projectId);
-    List<Entry> findAllByDayBetweenAndUserId(LocalDateTime after, LocalDateTime before, Long userId);
-    List<Entry> findAllByDayBetween(LocalDate after, LocalDate before);
+    List<Entry> findAllByFromBetweenAndUserIdAndProjectId(LocalDateTime after, LocalDateTime before, Long userId, Long projectId);
+    List<Entry> findAllByFromBetweenAndUserId(LocalDateTime after, LocalDateTime before, Long userId);
+    List<Entry> findAllByFromBetween(LocalDate after, LocalDate before);
 }

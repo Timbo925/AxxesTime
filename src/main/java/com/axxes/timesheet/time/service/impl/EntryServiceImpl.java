@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,9 +26,12 @@ public class EntryServiceImpl implements EntryService {
 
 
     @Override
-    public void createEntryForUser(LocalTime from, LocalTime to, LocalDateTime day, Long userId, Percentage percentage) {
+    public void createEntryForUser(LocalDateTime from, LocalDateTime to, Long userId, Percentage percentage) {
         User user = userRepository.findOne(userId);
-        Entry entry = new Entry(from, to, day);
+        Entry entry = new Entry();
+
+        entry.setFrom(from);
+        entry.setTo(to);
 
         entry.setUser(user);
         entry.setProject(user.getCurrentProject());
@@ -42,7 +44,7 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public void savePeriodAsUser(LocalDateTime from, LocalDateTime to, Long userId) {
-        List<Entry> entries = entryRepository.findAllByDayBetweenAndUserId(from, to, userId);
+        List<Entry> entries = entryRepository.findAllByFromBetweenAndUserId(from, to, userId);
         for (Entry e :  entries){
             e.setStatus(Status.SAVED);
             entryRepository.save(e);
@@ -51,7 +53,7 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public void savePeriodAsAdmin(LocalDateTime from, LocalDateTime to, Long userId) {
-        List<Entry>entries = entryRepository.findAllByDayBetweenAndUserId(from, to, userId);
+        List<Entry>entries = entryRepository.findAllByFromBetweenAndUserId(from, to, userId);
         for (Entry e :  entries){
             e.setStatus(Status.LOCKED);
             entryRepository.save(e);
@@ -60,7 +62,7 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public void editPeriodAsAdmin(LocalDateTime from, LocalDateTime to, Long userId) {
-        List<Entry>entries = entryRepository.findAllByDayBetweenAndUserId(from, to, userId);
+        List<Entry>entries = entryRepository.findAllByFromBetweenAndUserId(from, to, userId);
         for (Entry e :  entries){
             e.setStatus(Status.SAVED);
             entryRepository.save(e);

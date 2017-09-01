@@ -2,16 +2,14 @@ package com.axxes.timesheet.time.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
 public class Entry {
 
     @Id @GeneratedValue
     private Long id;
-    private LocalTime from;
-    private LocalTime to;
-    private LocalDateTime day;
+    private LocalDateTime from;
+    private LocalDateTime to;
     @ManyToOne
     private Project project;
     @Enumerated(EnumType.STRING)
@@ -21,24 +19,33 @@ public class Entry {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public Entry(LocalTime from, LocalTime to, LocalDateTime day){
-        this.from = from;
-        this.to = to;
-        this.day = day;
-    }
-
     @Override
     public String toString() {
         return "Entry{" +
                 "id=" + id +
                 ", from=" + from +
                 ", to=" + to +
-                ", day=" + day +
                 ", project=" + project +
                 ", percentage=" + percentage +
                 ", user=" + user +
                 ", status=" + status +
                 '}';
+    }
+
+    public LocalDateTime getFrom() {
+        return from;
+    }
+
+    public void setFrom(LocalDateTime from) {
+        this.from = from;
+    }
+
+    public LocalDateTime getTo() {
+        return to;
+    }
+
+    public void setTo(LocalDateTime to) {
+        this.to = to;
     }
 
     public Long getId() {
@@ -47,30 +54,6 @@ public class Entry {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalTime getFrom() {
-        return from;
-    }
-
-    public void setFrom(LocalTime from) {
-        this.from = from;
-    }
-
-    public LocalTime getTo() {
-        return to;
-    }
-
-    public void setTo(LocalTime to) {
-        this.to = to;
-    }
-
-    public LocalDateTime getDay() {
-        return day;
-    }
-
-    public void setDay(LocalDateTime day) {
-        this.day = day;
     }
 
     public Project getProject() {
@@ -125,9 +108,6 @@ public class Entry {
         if (to != null ? !to.equals(entry.to) : entry.to != null) {
             return false;
         }
-        if (day != null ? !day.equals(entry.day) : entry.day != null) {
-            return false;
-        }
         if (project != null ? !project.equals(entry.project) : entry.project != null) {
             return false;
         }
@@ -145,7 +125,6 @@ public class Entry {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (from != null ? from.hashCode() : 0);
         result = 31 * result + (to != null ? to.hashCode() : 0);
-        result = 31 * result + (day != null ? day.hashCode() : 0);
         result = 31 * result + (project != null ? project.hashCode() : 0);
         result = 31 * result + (percentage != null ? percentage.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);

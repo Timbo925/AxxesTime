@@ -9,7 +9,7 @@ import java.time.LocalTime;
 
 public interface EntryService {
 
-    void createEntryForUser(LocalTime from, LocalTime to, LocalDateTime day, Long userId, Percentage percentage);
+    void createEntryForUser(LocalDateTime from, LocalDateTime to, Long userId, Percentage percentage);
     void savePeriodAsUser(LocalDateTime from, LocalDateTime to, Long userId);
     void savePeriodAsAdmin(LocalDateTime from, LocalDateTime to, Long userId);
     void editPeriodAsAdmin(LocalDateTime from, LocalDateTime to, Long userId);
