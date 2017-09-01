@@ -4,5 +4,5 @@ install: true
 script: mvn clean verify
 deploy:
   provider: heroku
-  api_key:
-    secure: "cd44ddb1-4390-4452-8f5e-c22e36e741c9"
+  api_key: "cd44ddb1-4390-4452-8f5e-c22e36e741c9"
+  app: axxes-timesheet
