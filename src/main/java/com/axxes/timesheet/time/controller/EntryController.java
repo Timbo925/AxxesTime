@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@RestController
+@RestController(value = "/entry")
 public class EntryController {
 
     @Autowired
     private EntryService entryService;
 
-    @RequestMapping(value = "/entries", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Entry> getEntries(@RequestParam(value = "startDate") LocalDateTime startDate,
                                   @RequestParam(value = "endDate") LocalDateTime endDate,
                                   @RequestParam(value = "projectId") Long projectId) {
