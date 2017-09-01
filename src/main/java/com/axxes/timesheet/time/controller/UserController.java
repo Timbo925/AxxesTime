@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @RequestMapping("/login")
-    public void login() {
-
+    public String login() {
+        return "Hallo World";
     }
 
     @RequestMapping("/logout")

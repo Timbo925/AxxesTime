@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.ZonedDateTime;
 
 @RestController
-public class EntrieController {
+public class EntryController {
 
     @RequestMapping(value = "/entries", method = RequestMethod.GET)
     public void getEntries(@RequestParam(value="startDate") ZonedDateTime startDate, @RequestParam(value="endDate") ZonedDateTime endDate) {
