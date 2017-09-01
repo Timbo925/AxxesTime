@@ -60,11 +60,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean entryExistsFromProjectWithDate(Long projectId, LocalDateTime date, List<Entry> entries) {
-        for (Entry e : entries) {
-            if (e.getFrom().equals(date) && e.getProject().getId().equals(projectId)) {
-                return true;
-            }
-        }
-        return false;
+        return entries.stream().anyMatch(e -> e.getFrom().equals(date) && e.getProject().getId().equals(projectId));
     }
 }
