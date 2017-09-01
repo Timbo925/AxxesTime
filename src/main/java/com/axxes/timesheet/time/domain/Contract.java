@@ -1,16 +1,21 @@
 package com.axxes.timesheet.time.domain;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Contract {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
     private String name;
     private String client;
     @Enumerated(EnumType.STRING)
     private Type type;
+    private double amountOfHours;
+    private LocalDateTime defaultStart;
+    private LocalDateTime defaultEnd;
 
     @Override
     public String toString() {
@@ -20,6 +25,22 @@ public class Contract {
                 ", client='" + client + '\'' +
                 ", type=" + type +
                 '}';
+    }
+
+    public LocalDateTime getDefaultStart() {
+        return defaultStart;
+    }
+
+    public void setDefaultStart(LocalDateTime defaultStart) {
+        this.defaultStart = defaultStart;
+    }
+
+    public LocalDateTime getDefaultEnd() {
+        return defaultEnd;
+    }
+
+    public void setDefaultEnd(LocalDateTime defaultEnd) {
+        this.defaultEnd = defaultEnd;
     }
 
     public Long getId() {
@@ -85,5 +106,13 @@ public class Contract {
         result = 31 * result + (client != null ? client.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
+    }
+
+    public double getAmountOfHours() {
+        return amountOfHours;
+    }
+
+    public void setAmountOfHours(double amountOfHours) {
+        this.amountOfHours = amountOfHours;
     }
 }
