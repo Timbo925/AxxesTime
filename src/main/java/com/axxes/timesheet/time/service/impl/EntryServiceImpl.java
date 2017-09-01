@@ -4,16 +4,14 @@ import com.axxes.timesheet.time.domain.Contract;
 import com.axxes.timesheet.time.domain.Entry;
 import com.axxes.timesheet.time.domain.Percentage;
 import com.axxes.timesheet.time.domain.Status;
-import com.axxes.timesheet.time.exception.EntryException;
-import com.axxes.timesheet.time.repository.EntryRepository;
 import com.axxes.timesheet.time.repository.ContractRepository;
+import com.axxes.timesheet.time.repository.EntryRepository;
 import com.axxes.timesheet.time.service.EntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class EntryServiceImpl implements EntryService {
@@ -52,21 +50,8 @@ public class EntryServiceImpl implements EntryService {
 
 
     @Override
-    public void editPeriodAsAdmin(LocalDateTime from, LocalDateTime to, Long userId) {
-        List<Entry> entries = entryRepository.findAllByFromBetweenAndContractId(from, to, userId);
-        for (Entry e : entries) {
-            e.setStatus(Status.SAVED);
-            entryRepository.save(e);
-        }
-    }
-
-    @Override
-    public void editEntry(Long entryId, Entry entry) throws EntryException {
-        if (Objects.equals(entry.getId(), entryId)) {
-            entryRepository.save(entry);
-        } else {
-            throw new EntryException("ID of old and new entry did not match.");
-        }
+    public Entry update(Entry entry) {
+        return entryRepository.save(entry);
     }
 
     @Override
@@ -82,6 +67,11 @@ public class EntryServiceImpl implements EntryService {
     @Override
     public boolean lockEntries(LocalDateTime from, LocalDateTime to, Long projectId) {
         return false;
+    }
+
+    @Override
+    public void delete(Long entryId) {
+        entryRepository.delete(entryRepository.findOne(entryId));
     }
 
 }
