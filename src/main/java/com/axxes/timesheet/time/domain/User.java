@@ -5,7 +5,8 @@ import javax.persistence.*;
 @Entity
 public class User {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
     private String firstName;
     private String lastName;
@@ -17,6 +18,7 @@ public class User {
     private Double recup;
     @ManyToOne
     private Project currentProject;
+    private String password;
 
     public Long getId() {
         return id;
@@ -141,5 +143,13 @@ public class User {
 
     public void setRecup(Double recup) {
         this.recup = recup;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
