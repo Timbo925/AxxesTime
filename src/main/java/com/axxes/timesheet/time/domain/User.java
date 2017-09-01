@@ -1,6 +1,7 @@
 package com.axxes.timesheet.time.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -15,8 +16,8 @@ public class User {
     private UserType userType;
     private Double vacation;
     private Double recup;
-    @ManyToOne
-    private Project currentProject;
+    @OneToMany
+    private List<Contract> contracts;
 
     public Long getId() {
         return id;
@@ -66,12 +67,12 @@ public class User {
         this.userType = userType;
     }
 
-    public Project getCurrentProject() {
-        return currentProject;
+    public List<Contract> getContracts() {
+        return contracts;
     }
 
-    public void setCurrentProject(Project currentProject) {
-        this.currentProject = currentProject;
+    public void setContracts(List<Contract> contracts) {
+        this.contracts = contracts;
     }
 
     @Override
@@ -83,7 +84,9 @@ public class User {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", userType=" + userType +
-                ", currentProject=" + currentProject +
+                ", vacation=" + vacation +
+                ", recup=" + recup +
+                ", contracts=" + contracts +
                 '}';
     }
 

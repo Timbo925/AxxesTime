@@ -1,7 +1,7 @@
 package com.axxes.timesheet.time.service.impl;
 
+import com.axxes.timesheet.time.domain.Contract;
 import com.axxes.timesheet.time.domain.Entry;
-import com.axxes.timesheet.time.domain.Project;
 import com.axxes.timesheet.time.domain.User;
 import com.axxes.timesheet.time.repository.EntryRepository;
 import com.axxes.timesheet.time.repository.UserRepository;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,26 +25,26 @@ public class UserServiceImpl implements UserService {
     private EntryRepository entryRepository;
 
     @Override
-    public void assignProjectToUser(Long userId, Project project) {
+    public void assignProjectToUser(Long userId, Contract contract) {
         User user = userRepository.findOne(userId);
-        user.setCurrentProject(project);
+        user.getContracts().add(contract);
         userRepository.save(user);
     }
 
     @Override
     public List<User> findUsersWithIncompletePeriod(LocalDate from, LocalDate to) {
-        List<Entry> entries = entryRepository.findAllByFromBetween(from, to);
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users::add);
-        List<LocalDate> requiredDays = findRequiredDaysInPeriod(from, to);
 
         List<User> incomplete = new ArrayList<>();
 
         for (User u : users) {
-            for (LocalDate l : requiredDays) {
-                if (!entryExistsFromUserWithDate(u.getId(), l, entries)) {
-                    incomplete.add(u);
-                }
+            List<Entry> entriesFromUser = new ArrayList<>();
+            for (Contract p : u.getContracts()) {
+                entriesFromUser.addAll(entryRepository.findAllByFromBetweenAndContractId(from.atStartOfDay(), to.plusDays(1).atStartOfDay(), p.getId()));
+            }
+            if (!periodContainRequiredDays(entriesFromUser, from.atStartOfDay(), to.plusDays(1).atStartOfDay())) {
+                incomplete.add(u);
             }
         }
         return incomplete;
@@ -59,9 +60,19 @@ public class UserServiceImpl implements UserService {
         return dates;
     }
 
-    private boolean entryExistsFromUserWithDate(Long userId, LocalDate date, List<Entry> entries) {
+    private boolean periodContainRequiredDays(List<Entry> entries, LocalDateTime from, LocalDateTime to) {
+        List<LocalDate> requiredDates = findRequiredDaysInPeriod(from.toLocalDate(), to.toLocalDate());
+        for (LocalDate l : requiredDates) {
+            if (!hasRequiredDay(entries, l)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean hasRequiredDay(List<Entry> entries, LocalDate date) {
         for (Entry e : entries) {
-            if (e.getFrom().toLocalDate().equals(date) && e.getUser().getId().equals(userId)) {
+            if (e.getFrom().toLocalDate().equals(date)) {
                 return true;
             }
         }

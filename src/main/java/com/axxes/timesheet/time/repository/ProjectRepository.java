@@ -1,8 +1,8 @@
 package com.axxes.timesheet.time.repository;
 
-import com.axxes.timesheet.time.domain.Project;
+import com.axxes.timesheet.time.domain.Contract;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ProjectRepository extends CrudRepository<Project, Long> {
+public interface ProjectRepository extends CrudRepository<Contract, Long> {
 
 }

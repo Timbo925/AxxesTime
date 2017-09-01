@@ -22,7 +22,7 @@ public class EntryController {
                                   @RequestParam(value = "endDate") LocalDate endDate,
                                   @RequestParam(value = "projectId") Long projectId) {
 
-        return entryService.getEntriesBetweenFor(startDate, endDate, projectId);
+        return entryService.getEntriesBetweenFor(startDate.atStartOfDay(), endDate.atStartOfDay(), projectId);
     }
 
 
