@@ -3,7 +3,7 @@ package com.axxes.timesheet.time.domain;
 import javax.persistence.*;
 
 @Entity
-public class Project {
+public class Contract {
 
     @Id @GeneratedValue
     private Long id;
@@ -14,7 +14,7 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project{" +
+        return "Contract{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", client='" + client + '\'' +
@@ -64,18 +64,18 @@ public class Project {
             return false;
         }
 
-        Project project = (Project) o;
+        Contract contract = (Contract) o;
 
-        if (id != null ? !id.equals(project.id) : project.id != null) {
+        if (id != null ? !id.equals(contract.id) : contract.id != null) {
             return false;
         }
-        if (name != null ? !name.equals(project.name) : project.name != null) {
+        if (name != null ? !name.equals(contract.name) : contract.name != null) {
             return false;
         }
-        if (client != null ? !client.equals(project.client) : project.client != null) {
+        if (client != null ? !client.equals(contract.client) : contract.client != null) {
             return false;
         }
-        return type == project.type;
+        return type == contract.type;
     }
 
     @Override
