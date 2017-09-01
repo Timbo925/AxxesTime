@@ -7,13 +7,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
+    @RequestMapping("/hello/secure")
+    public String helloSecure() {
+        return "Hello Secure";
+    }
+
+    @RequestMapping("/hello")
+    public String hello() {
+        return "Hello World";
+    }
+
     @RequestMapping("/login")
-    public String login() {
-        return "Hallo World";
+    public void login() {
+
     }
 
     @RequestMapping("/logout")
-    public void lougout() {
+    public void logout() {
 
     }
 
