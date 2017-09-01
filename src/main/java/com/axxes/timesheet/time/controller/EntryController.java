@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -18,8 +18,8 @@ public class EntryController {
     private EntryService entryService;
 
     @RequestMapping(value = "/entries", method = RequestMethod.GET)
-    public List<Entry> getEntries(@RequestParam(value = "startDate") LocalDate startDate,
-                                  @RequestParam(value = "endDate") LocalDate endDate,
+    public List<Entry> getEntries(@RequestParam(value = "startDate") LocalDateTime startDate,
+                                  @RequestParam(value = "endDate") LocalDateTime endDate,
                                   @RequestParam(value = "projectId") Long projectId) {
 
         return entryService.getEntriesBetweenFor(startDate.atStartOfDay(), endDate.atStartOfDay(), projectId);

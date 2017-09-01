@@ -18,6 +18,9 @@ public class User {
     private Double recup;
     @OneToMany
     private List<Contract> contracts;
+    @ManyToOne
+    private Project currentProject;
+    private String password;
 
     public Long getId() {
         return id;
@@ -144,5 +147,13 @@ public class User {
 
     public void setRecup(Double recup) {
         this.recup = recup;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
