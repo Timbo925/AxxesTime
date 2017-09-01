@@ -1,12 +1,19 @@
 package domain;
 
-public class User {
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
 
+@Entity
+public class User {
+    @Id
     private Long id;
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
+    @Enumerated(EnumType.STRING)
     private UserType userType;
 
     public Long getId() {

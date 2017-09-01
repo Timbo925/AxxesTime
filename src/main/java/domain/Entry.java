@@ -2,66 +2,27 @@ package domain;
 
 import org.apache.catalina.User;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
+@Entity
 public class Entry {
 
+    @Id
     private Long id;
-    private LocalDateTime from;
-    private LocalDateTime to;
-    private String dag;
+    private LocalTime from;
+    private LocalTime to;
+    private LocalDateTime dag;
     private Project project;
-    private Percentage percantage;
+    @Enumerated(EnumType.STRING)
+    private Percentage percentage;
     private User user;
+    @Enumerated(EnumType.STRING)
     private Status status;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Entry entry = (Entry) o;
-
-        if (getId() != null ? !getId().equals(entry.getId()) : entry.getId() != null) {
-            return false;
-        }
-        if (getFrom() != null ? !getFrom().equals(entry.getFrom()) : entry.getFrom() != null) {
-            return false;
-        }
-        if (getTo() != null ? !getTo().equals(entry.getTo()) : entry.getTo() != null) {
-            return false;
-        }
-        if (getDag() != null ? !getDag().equals(entry.getDag()) : entry.getDag() != null) {
-            return false;
-        }
-        if (getProject() != null ? !getProject().equals(entry.getProject()) : entry.getProject() != null) {
-            return false;
-        }
-        if (getPercantage() != entry.getPercantage()) {
-            return false;
-        }
-        if (getUser() != null ? !getUser().equals(entry.getUser()) : entry.getUser() != null) {
-            return false;
-        }
-        return getStatus() == entry.getStatus();
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getFrom() != null ? getFrom().hashCode() : 0);
-        result = 31 * result + (getTo() != null ? getTo().hashCode() : 0);
-        result = 31 * result + (getDag() != null ? getDag().hashCode() : 0);
-        result = 31 * result + (getProject() != null ? getProject().hashCode() : 0);
-        result = 31 * result + (getPercantage() != null ? getPercantage().hashCode() : 0);
-        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
-        result = 31 * result + (getStatus() != null ? getStatus().hashCode() : 0);
-        return result;
-    }
 
     @Override
     public String toString() {
@@ -69,9 +30,9 @@ public class Entry {
                 "id=" + id +
                 ", from=" + from +
                 ", to=" + to +
-                ", dag='" + dag + '\'' +
+                ", dag=" + dag +
                 ", project=" + project +
-                ", percantage=" + percantage +
+                ", percentage=" + percentage +
                 ", user=" + user +
                 ", status=" + status +
                 '}';
@@ -85,27 +46,27 @@ public class Entry {
         this.id = id;
     }
 
-    public LocalDateTime getFrom() {
+    public LocalTime getFrom() {
         return from;
     }
 
-    public void setFrom(LocalDateTime from) {
+    public void setFrom(LocalTime from) {
         this.from = from;
     }
 
-    public LocalDateTime getTo() {
+    public LocalTime getTo() {
         return to;
     }
 
-    public void setTo(LocalDateTime to) {
+    public void setTo(LocalTime to) {
         this.to = to;
     }
 
-    public String getDag() {
+    public LocalDateTime getDag() {
         return dag;
     }
 
-    public void setDag(String dag) {
+    public void setDag(LocalDateTime dag) {
         this.dag = dag;
     }
 
@@ -117,12 +78,12 @@ public class Entry {
         this.project = project;
     }
 
-    public Percentage getPercantage() {
-        return percantage;
+    public Percentage getPercentage() {
+        return percentage;
     }
 
-    public void setPercantage(Percentage percantage) {
-        this.percantage = percantage;
+    public void setPercentage(Percentage percentage) {
+        this.percentage = percentage;
     }
 
     public User getUser() {
@@ -139,5 +100,53 @@ public class Entry {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Entry entry = (Entry) o;
+
+        if (id != null ? !id.equals(entry.id) : entry.id != null) {
+            return false;
+        }
+        if (from != null ? !from.equals(entry.from) : entry.from != null) {
+            return false;
+        }
+        if (to != null ? !to.equals(entry.to) : entry.to != null) {
+            return false;
+        }
+        if (dag != null ? !dag.equals(entry.dag) : entry.dag != null) {
+            return false;
+        }
+        if (project != null ? !project.equals(entry.project) : entry.project != null) {
+            return false;
+        }
+        if (percentage != entry.percentage) {
+            return false;
+        }
+        if (user != null ? !user.equals(entry.user) : entry.user != null) {
+            return false;
+        }
+        return status == entry.status;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (from != null ? from.hashCode() : 0);
+        result = 31 * result + (to != null ? to.hashCode() : 0);
+        result = 31 * result + (dag != null ? dag.hashCode() : 0);
+        result = 31 * result + (project != null ? project.hashCode() : 0);
+        result = 31 * result + (percentage != null ? percentage.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        return result;
     }
 }

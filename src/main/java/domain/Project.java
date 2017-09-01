@@ -1,11 +1,18 @@
 package domain;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+
+@Entity
 public class Project {
 
-
+    @Id
     private Long id;
     private String name;
     private String client;
+    @Enumerated(EnumType.STRING)
     private Type type;
 
     @Override
