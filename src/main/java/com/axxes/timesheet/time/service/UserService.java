@@ -10,10 +10,9 @@ public interface UserService {
 
     void assignProjectToUser(Long userId, Contract contract);
 
-    List<User> findUsersWithIncompletePeriod(LocalDateTime from, LocalDateTime to, Long projectId);
-
     boolean takeRecup(double amount);
 
     boolean takeVacation(double amount);
+
     List<User> findUsersWithIncompletePeriod(LocalDateTime from, LocalDateTime to);
 }

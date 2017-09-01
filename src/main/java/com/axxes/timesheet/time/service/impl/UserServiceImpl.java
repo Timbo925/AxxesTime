@@ -2,7 +2,6 @@ package com.axxes.timesheet.time.service.impl;
 
 import com.axxes.timesheet.time.domain.Contract;
 import com.axxes.timesheet.time.domain.Entry;
-import com.axxes.timesheet.time.domain.Project;
 import com.axxes.timesheet.time.domain.User;
 import com.axxes.timesheet.time.repository.EntryRepository;
 import com.axxes.timesheet.time.repository.UserRepository;
@@ -73,9 +72,9 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean periodContainRequiredDays(List<Entry> entries, LocalDateTime from, LocalDateTime to) {
-        List<LocalDate> requiredDates = findRequiredDaysInPeriod(from.toLocalDate(), to.toLocalDate());
-        for (LocalDate l : requiredDates) {
-            if (!hasRequiredDay(entries, l)) {
+        List<LocalDateTime> requiredDates = findRequiredDaysInPeriod(from, to);
+        for (LocalDateTime l : requiredDates) {
+            if (!hasRequiredDay(entries, l.toLocalDate())) {
                 return false;
             }
         }
