@@ -2,6 +2,7 @@ package com.axxes.timesheet.time.service.impl;
 
 import com.axxes.timesheet.time.domain.Contract;
 import com.axxes.timesheet.time.domain.Entry;
+import com.axxes.timesheet.time.domain.Project;
 import com.axxes.timesheet.time.domain.User;
 import com.axxes.timesheet.time.repository.EntryRepository;
 import com.axxes.timesheet.time.repository.UserRepository;
@@ -35,6 +36,7 @@ public class UserServiceImpl implements UserService {
     public List<User> findUsersWithIncompletePeriod(LocalDateTime from, LocalDateTime to) {
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(users::add);
+        List<LocalDateTime> requiredDays = findRequiredDaysInPeriod(from, to);
 
         List<User> incomplete = new ArrayList<>();
 
@@ -50,9 +52,19 @@ public class UserServiceImpl implements UserService {
         return incomplete;
     }
 
-    private List<LocalDate> findRequiredDaysInPeriod(LocalDate from, LocalDate to) {
-        List<LocalDate> dates = new ArrayList<>();
-        for (LocalDate date = from; date.isBefore(to); date = date.plusDays(1)) {
+    @Override
+    public boolean takeRecup(double amount) {
+        return false;
+    }
+
+    @Override
+    public boolean takeVacation(double amount) {
+        return false;
+    }
+
+    private List<LocalDateTime> findRequiredDaysInPeriod(LocalDateTime from, LocalDateTime to) {
+        List<LocalDateTime> dates = new ArrayList<>();
+        for (LocalDateTime date = from; date.isBefore(to); date = date.plusDays(1)) {
             if (!date.getDayOfWeek().equals(DayOfWeek.SATURDAY) && !date.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
                 dates.add(date);
             }
