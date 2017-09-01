@@ -6,7 +6,7 @@ import com.axxes.timesheet.time.domain.Percentage;
 import com.axxes.timesheet.time.domain.Status;
 import com.axxes.timesheet.time.exception.EntryException;
 import com.axxes.timesheet.time.repository.EntryRepository;
-import com.axxes.timesheet.time.repository.ProjectRepository;
+import com.axxes.timesheet.time.repository.ContractRepository;
 import com.axxes.timesheet.time.service.EntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +22,12 @@ public class EntryServiceImpl implements EntryService {
     private EntryRepository entryRepository;
 
     @Autowired
-    private ProjectRepository projectRepository;
+    private ContractRepository contractRepository;
 
 
     @Override
     public Entry createEntryForProject(LocalDateTime from, LocalDateTime to, Long projectId, Percentage percentage) {
-        Contract contract = projectRepository.findOne(projectId);
+        Contract contract = contractRepository.findOne(projectId);
         Entry entry = new Entry();
         entry.setFrom(from);
         entry.setTo(to);

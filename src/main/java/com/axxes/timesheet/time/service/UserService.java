@@ -14,4 +14,8 @@ public interface UserService {
 
     List<User> findUsersWithIncompletePeriod(LocalDateTime from, LocalDateTime to);
     void takeVacation(double amount, long userId);
+
+    User get(Long userId);
+
+    void delete(Long userId);
 }

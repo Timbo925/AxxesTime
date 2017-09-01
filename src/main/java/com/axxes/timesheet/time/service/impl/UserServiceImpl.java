@@ -62,6 +62,17 @@ public class UserServiceImpl implements UserService {
         user.substractVacation(amount);
     }
 
+    @Override
+    public User get(Long userId) {
+
+        return userRepository.findOne(userId);
+    }
+
+    @Override
+    public void delete(Long userId) {
+        userRepository.delete(userRepository.findOne(userId));
+    }
+
     private List<LocalDateTime> findRequiredDaysInPeriod(LocalDateTime from, LocalDateTime to) {
         List<LocalDateTime> dates = new ArrayList<>();
         for (LocalDateTime date = from; date.isBefore(to); date = date.plusDays(1)) {
