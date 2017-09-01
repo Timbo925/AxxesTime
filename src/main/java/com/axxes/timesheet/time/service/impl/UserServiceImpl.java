@@ -73,6 +73,11 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(userRepository.findOne(userId));
     }
 
+    @Override
+    public void addUser(User user) {
+        userRepository.save(user);
+    }
+
     private List<LocalDateTime> findRequiredDaysInPeriod(LocalDateTime from, LocalDateTime to) {
         List<LocalDateTime> dates = new ArrayList<>();
         for (LocalDateTime date = from; date.isBefore(to); date = date.plusDays(1)) {

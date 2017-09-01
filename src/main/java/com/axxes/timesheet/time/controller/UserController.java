@@ -1,27 +1,21 @@
 package com.axxes.timesheet.time.controller;
 
 import com.axxes.timesheet.time.domain.User;
+import com.axxes.timesheet.time.facade.UserFacade;
+import com.axxes.timesheet.time.facade.input.UserInput;
 import com.axxes.timesheet.time.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/hello/secure")
-    public String helloSecure() {
-        return "Hello Secure";
-    }
-
-    @RequestMapping("/hello")
-    public String hello() {
-        return "Hello World";
-    }
+    @Autowired
+    private UserFacade userFacade;
 
     @RequestMapping("/login")
     public void login() {
@@ -33,23 +27,23 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public User getUser(Long userId) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public User getUser(@PathVariable("id") Long userId) {
         return userService.get(userId);
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public void createUser() {
-
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public void createUser(@RequestBody UserInput user) {
+        userFacade.addUser(user);
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public void deleteUser(Long userId) {
         userService.delete(userId);
 
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/update", method = RequestMethod.PATCH)
     public void updateUser() {
 
     }
