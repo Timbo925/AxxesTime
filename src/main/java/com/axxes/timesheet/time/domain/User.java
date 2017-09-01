@@ -152,4 +152,20 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void substractVacation(double amount) {
+        if (amount > 0 && this.getVacation() > amount) {
+            this.setVacation(this.getVacation() - amount);
+        } else {
+            throw new RuntimeException("not enough vacation");
+        }
+    }
+
+    public void substractRecup(double amount) {
+        if (amount > 0 && this.getRecup() > amount) {
+            this.setRecup(this.getRecup() - amount);
+        } else {
+            throw new RuntimeException("not enough recup");
+        }
+    }
 }

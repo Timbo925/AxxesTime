@@ -50,13 +50,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean takeRecup(double amount) {
-        return false;
+    public void takeRecup(double amount, long userId) {
+        User user = userRepository.findOne(userId);
+        user.substractRecup(amount);
     }
 
     @Override
-    public boolean takeVacation(double amount) {
-        return false;
+    public void takeVacation(double amount, long userId) {
+        User user = userRepository.findOne(userId);
+        user.substractVacation(amount);
     }
 
     private List<LocalDateTime> findRequiredDaysInPeriod(LocalDateTime from, LocalDateTime to) {

@@ -12,7 +12,7 @@ public interface UserService {
 
     List<User> findUsersWithIncompletePeriod(LocalDateTime from, LocalDateTime to, Long projectId);
 
-    boolean takeRecup(double amount);
+    void takeRecup(double amount, long userId);
 
-    boolean takeVacation(double amount);
+    void takeVacation(double amount, long userId);
 }
