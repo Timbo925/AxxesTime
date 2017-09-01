@@ -49,6 +49,16 @@ public class UserServiceImpl implements UserService {
         return incomplete;
     }
 
+    @Override
+    public boolean takeRecup(double amount) {
+        return false;
+    }
+
+    @Override
+    public boolean takeVacation(double amount) {
+        return false;
+    }
+
     private List<LocalDateTime> findRequiredDaysInPeriod(LocalDateTime from, LocalDateTime to) {
         List<LocalDateTime> dates = new ArrayList<>();
         for (LocalDateTime date = from; date.isBefore(to); date = date.plusDays(1)) {
