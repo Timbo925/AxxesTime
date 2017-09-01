@@ -21,4 +21,6 @@ public interface UserService {
     void delete(Long userId);
 
     void addUser(User user);
+
+    User get(String username);
 }
