@@ -2,17 +2,16 @@ package com.axxes.timesheet.time.service.impl;
 
 import com.axxes.timesheet.time.domain.Entry;
 import com.axxes.timesheet.time.domain.Percentage;
+import com.axxes.timesheet.time.domain.Project;
 import com.axxes.timesheet.time.domain.Status;
-import com.axxes.timesheet.time.domain.User;
 import com.axxes.timesheet.time.exception.EntryException;
 import com.axxes.timesheet.time.repository.EntryRepository;
-import com.axxes.timesheet.time.repository.UserRepository;
+import com.axxes.timesheet.time.repository.ProjectRepository;
 import com.axxes.timesheet.time.service.EntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,45 +22,39 @@ public class EntryServiceImpl implements EntryService {
     private EntryRepository entryRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private ProjectRepository projectRepository;
 
 
     @Override
-    public void createEntryForUser(LocalTime from, LocalTime to, LocalDateTime day, Long userId, Percentage percentage) {
-        User user = userRepository.findOne(userId);
-        Entry entry = new Entry(from, to, day);
+    public Entry createEntryForProject(LocalDateTime from, LocalDateTime to, Long projectId, Percentage percentage) {
+        Project project = projectRepository.findOne(projectId);
+        Entry entry = new Entry();
+        entry.setFrom(from);
+        entry.setTo(to);
 
-        entry.setUser(user);
-        entry.setProject(user.getCurrentProject());
+        entry.setProject(project);
         entry.setPercentage(percentage);
 
         entry.setStatus(Status.OPEN);
 
-        entryRepository.save(entry);
+        return entryRepository.save(entry);
     }
 
+
     @Override
-    public void savePeriodAsUser(LocalDateTime from, LocalDateTime to, Long userId) {
-        List<Entry> entries = entryRepository.findAllByDayBetweenAndUserId(from, to, userId);
-        for (Entry e :  entries){
+    public void saveEntriesForProject(LocalDateTime from, LocalDateTime to, Long projectId) {
+        List<Entry> entries = entryRepository.findAllByDayBetweenAndProjectId(from, to, projectId);
+        for (Entry e : entries) {
             e.setStatus(Status.SAVED);
             entryRepository.save(e);
         }
     }
 
-    @Override
-    public void savePeriodAsAdmin(LocalDateTime from, LocalDateTime to, Long userId) {
-        List<Entry>entries = entryRepository.findAllByDayBetweenAndUserId(from, to, userId);
-        for (Entry e :  entries){
-            e.setStatus(Status.LOCKED);
-            entryRepository.save(e);
-        }
-    }
 
     @Override
     public void editPeriodAsAdmin(LocalDateTime from, LocalDateTime to, Long userId) {
-        List<Entry>entries = entryRepository.findAllByDayBetweenAndUserId(from, to, userId);
-        for (Entry e :  entries){
+        List<Entry> entries = entryRepository.findAllByDayBetweenAndProjectId(from, to, userId);
+        for (Entry e : entries) {
             e.setStatus(Status.SAVED);
             entryRepository.save(e);
         }
@@ -69,7 +62,7 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public void editEntry(Long entryId, Entry entry) throws EntryException {
-        if (Objects.equals(entry.getId(), entryId)){
+        if (Objects.equals(entry.getId(), entryId)) {
             entryRepository.save(entry);
         } else {
             throw new EntryException("ID of old and new entry did not match.");
@@ -79,6 +72,16 @@ public class EntryServiceImpl implements EntryService {
     @Override
     public Entry getEntry(Long entryId) {
         return entryRepository.findOne(entryId);
+    }
+
+    @Override
+    public List<Entry> getEntriesBetweenFor(LocalDateTime startDate, LocalDateTime endDate, Long projectId) {
+        return null;
+    }
+
+    @Override
+    public boolean lockEntries(LocalDateTime from, LocalDateTime to, Long projectId) {
+        return false;
     }
 
 }

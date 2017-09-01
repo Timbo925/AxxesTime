@@ -5,15 +5,19 @@ import com.axxes.timesheet.time.domain.Percentage;
 import com.axxes.timesheet.time.exception.EntryException;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.List;
 
 public interface EntryService {
 
-    void createEntryForUser(LocalTime from, LocalTime to, LocalDateTime day, Long userId, Percentage percentage);
-    void savePeriodAsUser(LocalDateTime from, LocalDateTime to, Long userId);
-    void savePeriodAsAdmin(LocalDateTime from, LocalDateTime to, Long userId);
-    void editPeriodAsAdmin(LocalDateTime from, LocalDateTime to, Long userId);
+    Entry createEntryForProject(LocalDateTime from, LocalDateTime to, Long projectId, Percentage percentage);
+
+    void saveEntriesForProject(LocalDateTime from, LocalDateTime to, Long projectId);
+
+    void editPeriodAsAdmin(LocalDateTime from, LocalDateTime to, Long projectId);
     void editEntry(Long entryId, Entry entry) throws EntryException;
     Entry getEntry(Long entryId);
 
+    List<Entry> getEntriesBetweenFor(LocalDateTime startDate, LocalDateTime endDate, Long projectId);
+
+    boolean lockEntries(LocalDateTime from, LocalDateTime to, Long projectId);
 }
