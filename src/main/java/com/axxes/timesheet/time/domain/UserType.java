@@ -1,4 +1,4 @@
-package domain;
+package com.axxes.timesheet.time.domain;
 
 public enum UserType {
 

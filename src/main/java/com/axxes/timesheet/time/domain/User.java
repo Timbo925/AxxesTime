@@ -1,4 +1,4 @@
-package domain;
+package com.axxes.timesheet.time.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
