@@ -8,7 +8,12 @@ import java.util.List;
 
 public interface EntryService {
 
-    Entry createEntryForProject(LocalDateTime from, LocalDateTime to, Long projectId, Percentage percentage);
+    void createEntryForProject(LocalDateTime from, LocalDateTime to, Long projectId, Percentage percentage);
+    void savePeriodInProject(LocalDateTime from, LocalDateTime to, Long projectId);
+    void savePeriodAsAdmin(LocalDateTime from, LocalDateTime to, Long projectId);
+    void editPeriodAsAdmin(LocalDateTime from, LocalDateTime to, Long projectId);
+    void editEntry(Long entryId, Entry entry) throws EntryException;
+    Entry getEntry(Long entryId);
 
     void saveEntriesForProject(LocalDateTime from, LocalDateTime to, Long projectId);
 
