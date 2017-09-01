@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 @RestController
 public class EntryController {
 
-    @RequestMapping(value = "/entries", method = RequestMethod.GET)
+    @RequestMapping(value = "user/entries", method = RequestMethod.GET)
     public void getEntries(@RequestParam(value="startDate") ZonedDateTime startDate, @RequestParam(value="endDate") ZonedDateTime endDate) {
 
     }

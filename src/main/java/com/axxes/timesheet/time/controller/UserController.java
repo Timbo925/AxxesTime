@@ -17,8 +17,14 @@ public class UserController {
 
     }
 
-    @RequestMapping(value="/user", method = RequestMethod.GET)
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
     public void user() {
+
+    }
+
+    @RequestMapping(value = "/users")
+    public void getAllUsers() {
+
 
     }
 

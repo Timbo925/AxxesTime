@@ -1,6 +1,5 @@
 package com.axxes.timesheet.time.domain;
 
-import org.apache.catalina.User;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

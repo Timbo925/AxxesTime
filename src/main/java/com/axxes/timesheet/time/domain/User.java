@@ -15,6 +15,8 @@ public class User {
     private String phone;
     @Enumerated(EnumType.STRING)
     private UserType userType;
+    private Double vacation;
+    private Double recup;
 
     public Long getId() {
         return id;
@@ -114,5 +116,21 @@ public class User {
         result = 31 * result + (getPhone() != null ? getPhone().hashCode() : 0);
         result = 31 * result + (getUserType() != null ? getUserType().hashCode() : 0);
         return result;
+    }
+
+    public Double getVacation() {
+        return vacation;
+    }
+
+    public void setVacation(Double vacation) {
+        this.vacation = vacation;
+    }
+
+    public Double getRecup() {
+        return recup;
+    }
+
+    public void setRecup(Double recup) {
+        this.recup = recup;
     }
 }
