@@ -5,3 +5,8 @@ script: ./mvnw clean install
 cache:
   directories:
   - $HOME/.m2
+deploy:
+  provider: heroku
+  api_key:
+    secure: "ZuS573tGVWq6n7uPHc7tea4MhQJhPEqao+De5A7ytYHos9zqHfr7x2p1KtNlj3w/inizUiSlF6DvvTuv3waeKi+Jo0gnEO2yzybO4cOTNxGOZb1WA9YTQRatFbs0waQkWnHPAdlnE8igGzqKj/pamYDEaNmFjq5lizufw3SUIUC/T04sJgSRcL4NRuyGQSzVdnYpP/cfEjKr5bIAzt0hc0NJTBso7PQ3WWSknxHoLjsfdq0buctVUoyrTuWiam/UMHxUT1RION8k1bx6hfge2fiSG1I4nT5tJSOBWUnvxn4mwI/v9cHfpX8/76lqe0Fw6rXBQqAjR9p7hfjl7Ad8nNXDGlsD1jHdv+Qajm0/VWoGvmDXNotwql/SkS7FFMfl+tXS3xp336ExlHbZSIFx9aBQ5aBa9cOp+it/qq/Tj9vzfysWgGxqCFWz7Xv+hRd7dg1ITCFDvHjex6Xsw2wcZ74meFNd3ZgqxxcOvCCtZrToeWyUbqA0wuK7r1RASuPzkFik+nfhhdkO8dJgSQfQQpb9RDo3mNnGxCFI5bp8kOfwP2qxFhUZsfnqYRkhGgYdymjwrfziyf3uLBkdxQGLSmr7f8ow+Bqgr95JUw62NjNB8YUeqluLnSlDrEcgrw5zZuAiryoEW4hkRDJC1LadmESFG1mgVEcYiQO+7dbMTqM="
+    app: "axxes.time"
