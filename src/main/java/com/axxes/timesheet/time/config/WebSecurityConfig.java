@@ -18,7 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
-
+        http.csrf().disable();
         http
                 .authorizeRequests()
                 .antMatchers( "/hello", "/error").permitAll()
