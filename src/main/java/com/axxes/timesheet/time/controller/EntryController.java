@@ -23,7 +23,7 @@ public class EntryController {
         return entryService.getEntriesBetweenFor(startDate, endDate, projectId);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public Entry getEntry(@PathVariable("id") Long entryId) {
         return entryService.getEntry(entryId);
     }
