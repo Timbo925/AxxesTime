@@ -1,5 +1,10 @@
 package com.axxes.timesheet.time.domain;
 
+import com.axxes.timesheet.time.converte.LocalDateTimeDeserializer;
+import com.axxes.timesheet.time.converte.LocalDateTimeSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -9,7 +14,11 @@ public class Entry {
     @Id
     @GeneratedValue
     private Long id;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime begin;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime to;
     @Enumerated(EnumType.STRING)
     private Percentage percentage;
