@@ -1,6 +1,8 @@
 package com.axxes.timesheet.time.controller;
 
 import com.axxes.timesheet.time.domain.Entry;
+import com.axxes.timesheet.time.facade.EntryFacade;
+import com.axxes.timesheet.time.facade.input.EntryInput;
 import com.axxes.timesheet.time.service.EntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,9 @@ public class EntryController {
     @Autowired
     private EntryService entryService;
 
+    @Autowired
+    private EntryFacade entryFacade;
+
     @RequestMapping(value = "/period/all", method = RequestMethod.GET)
     public List<Entry> getEntries(@RequestParam(value = "startDate") LocalDateTime startDate,
                                   @RequestParam(value = "endDate") LocalDateTime endDate,
@@ -25,8 +30,8 @@ public class EntryController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Entry> getEntriesPeriod(@RequestParam(value = "startDate") LocalDateTime startDate,
-                                  @RequestParam(value = "period") String period,
-                                  @RequestParam(value = "userId") Long userId) {
+                                        @RequestParam(value = "period") String period,
+                                        @RequestParam(value = "userId") Long userId) {
 
         return entryService.getEntriesInPeriodForUser(startDate, period, userId);
     }
@@ -48,7 +53,7 @@ public class EntryController {
     }
 
     @PostMapping("/{id}")
-    public Entry create(@RequestBody Entry entry, @PathVariable("id") Long projectId) {
-        return entryService.create(entry, projectId);
+    public void create(@RequestBody EntryInput entry, @PathVariable("id") Long projectId) {
+        entryFacade.createEntry(entry, projectId);
     }
 }
