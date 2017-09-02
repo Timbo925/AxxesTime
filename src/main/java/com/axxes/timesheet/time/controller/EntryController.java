@@ -15,13 +15,22 @@ public class EntryController {
     @Autowired
     private EntryService entryService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @RequestMapping(value = "/period/all", method = RequestMethod.GET)
     public List<Entry> getEntries(@RequestParam(value = "startDate") LocalDateTime startDate,
                                   @RequestParam(value = "endDate") LocalDateTime endDate,
                                   @RequestParam(value = "projectId") Long projectId) {
 
         return entryService.getEntriesBetweenFor(startDate, endDate, projectId);
     }
+
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public List<Entry> getEntriesPeriod(@RequestParam(value = "startDate") LocalDateTime startDate,
+                                  @RequestParam(value = "period") String period,
+                                  @RequestParam(value = "userId") Long userId) {
+
+        return entryService.getEntriesInPeriodForUser(startDate, period, userId);
+    }
+
 
     @GetMapping(value = "/{id}")
     public Entry getEntry(@PathVariable("id") Long entryId) {
