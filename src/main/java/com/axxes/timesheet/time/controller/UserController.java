@@ -3,6 +3,7 @@ package com.axxes.timesheet.time.controller;
 import com.axxes.timesheet.time.config.MyPrincipalUser;
 import com.axxes.timesheet.time.domain.User;
 import com.axxes.timesheet.time.facade.UserFacade;
+import com.axxes.timesheet.time.facade.dto.UserDto;
 import com.axxes.timesheet.time.facade.input.UserInput;
 import com.axxes.timesheet.time.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public User getUser(@PathVariable("id") Long userId) {
-		return userService.get(userId);
+	public UserDto getUser(@PathVariable("id") Long userId) {
+		return userFacade.getUser(userId);
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)

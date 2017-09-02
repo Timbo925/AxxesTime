@@ -35,9 +35,9 @@ public class SetupController {
         user.setFirstName("Rob");
         user.setLastName("Kenis");
         user.setEmail("rob.kenis@axxes.com");
-        user.setPassword("1207");
+        user.setPhone("1207");
         user.setUserType(UserType.CONSULTANT);
-        user.setRecup(0D);
+        user.setVacation(0D);
         user.setPassword("hahafuckoff");
         user.setContracts(new ArrayList<>());
         userService.addUser(user);
