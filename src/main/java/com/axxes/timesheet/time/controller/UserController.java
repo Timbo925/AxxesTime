@@ -44,8 +44,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public UserDto getUser(@PathVariable("id") Long userId) {
-		return userFacade.getUser(userId);
+	public User getUser(@PathVariable("id") Long userId) {
+		return userService.get(userId);
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
