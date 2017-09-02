@@ -3,6 +3,7 @@ package com.axxes.timesheet.time.service.impl;
 import com.axxes.timesheet.time.domain.Contract;
 import com.axxes.timesheet.time.domain.Entry;
 import com.axxes.timesheet.time.domain.User;
+import com.axxes.timesheet.time.repository.ContractRepository;
 import com.axxes.timesheet.time.repository.EntryRepository;
 import com.axxes.timesheet.time.repository.UserRepository;
 import com.axxes.timesheet.time.service.UserService;
@@ -24,9 +25,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private EntryRepository entryRepository;
 
+    @Autowired
+    private ContractRepository contractRepository;
+
     @Override
     public void assignProjectToUser(Long userId, Contract contract) {
         User user = userRepository.findOne(userId);
+        contractRepository.save(contract);
         user.getContracts().add(contract);
         userRepository.save(user);
     }
@@ -41,7 +46,7 @@ public class UserServiceImpl implements UserService {
         for (User u : users) {
             List<Entry> entriesFromUser = new ArrayList<>();
             for (Contract p : u.getContracts()) {
-                entriesFromUser.addAll(entryRepository.findAllByBeginBetweenAndContractId(begin, to.plusDays(1), p.getId()));
+                entriesFromUser.addAll(entryRepository.findByContractIdAndBeginBetween(begin, to.plusDays(1), p.getId()));
             }
             if (!periodContainsRequiredDays(entriesFromUser, begin, to.plusDays(1))) {
                 incomplete.add(u);

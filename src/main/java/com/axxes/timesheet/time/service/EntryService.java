@@ -20,4 +20,6 @@ public interface EntryService {
     boolean lockEntries(LocalDateTime from, LocalDateTime to, Long projectId);
 
     void delete(Long entryId);
+
+    List<Entry> getEntriesInPeriodForUser(LocalDateTime startDate, String period, Long userId);
 }

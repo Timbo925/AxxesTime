@@ -35,6 +35,8 @@ public class UserFacadeImpl implements UserFacade {
         user.setEmail(userInput.getEmail());
         user.setPhone(userInput.getPhone());
         user.setPassword(userInput.getPassword());
+        user.setVacation(0d);
+        user.setRecup(0d);
         user.setContracts(new ArrayList<>());
         user.setUserType(UserType.valueOf(userInput.getUserType()));
         userService.addUser(user);

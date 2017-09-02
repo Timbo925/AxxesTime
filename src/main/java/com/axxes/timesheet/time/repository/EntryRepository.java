@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface EntryRepository extends CrudRepository<Entry, Long> {
+public interface EntryRepository extends CrudRepository<Entry, Long>, EntryRepositoryCustom {
 
-    List<Entry> findAllByBeginBetweenAndContractId(LocalDateTime begin, LocalDateTime localDateTime, Long id);
+    List<Entry> findAllByBeginBetween(LocalDateTime begin, LocalDateTime localDateTime);
 }
